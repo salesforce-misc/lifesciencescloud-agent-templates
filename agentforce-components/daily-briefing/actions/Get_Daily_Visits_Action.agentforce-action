@@ -1,0 +1,88 @@
+{
+  "actionName": "Get_Daily_Visits_Action",
+  "displayName": "Get Daily Visits Action",
+  "description": "Retrieves daily visits for a user and date with comprehensive visit information",
+  "version": "1.0",
+  "status": "Active",
+  "actionType": "Apex",
+  "apexClass": "DailyBriefingAgent",
+  "apexMethod": "getDailyVisits",
+  "parameters": [
+    {
+      "name": "userId",
+      "type": "String",
+      "required": true,
+      "description": "The Salesforce User ID",
+      "source": "UserContext.UserId"
+    },
+    {
+      "name": "targetDate",
+      "type": "Date",
+      "required": true,
+      "description": "The target date for visit retrieval",
+      "source": "Intent.Date"
+    }
+  ],
+  "output": {
+    "type": "List<Visit>",
+    "description": "List of visits for the specified user and date",
+    "fields": [
+      {
+        "name": "Id",
+        "type": "String",
+        "description": "Visit ID"
+      },
+      {
+        "name": "AccountId",
+        "type": "String",
+        "description": "Account ID"
+      },
+      {
+        "name": "Account.Name",
+        "type": "String",
+        "description": "Account Name"
+      },
+      {
+        "name": "Account.Type",
+        "type": "String",
+        "description": "Account Type"
+      },
+      {
+        "name": "PlannedVisitStartTime",
+        "type": "DateTime",
+        "description": "Planned visit start time"
+      },
+      {
+        "name": "PlannedVisitEndTime",
+        "type": "DateTime",
+        "description": "Planned visit end time"
+      },
+      {
+        "name": "Status",
+        "type": "String",
+        "description": "Visit status"
+      },
+      {
+        "name": "StatusRemarks",
+        "type": "String",
+        "description": "Status remarks"
+      },
+      {
+        "name": "InstructionDescription",
+        "type": "String",
+        "description": "Visit instructions"
+      }
+    ]
+  },
+  "errorHandling": {
+    "onError": "Return empty list and log error",
+    "errorMessage": "Unable to retrieve daily visits",
+    "fallbackValue": "[]"
+  },
+  "metadata": {
+    "category": "Data Retrieval",
+    "tags": ["visits", "daily", "schedule", "field-sales"],
+    "lastModified": "2025-09-05T11:05:00Z",
+    "createdBy": "LSC4CE Team"
+  }
+}

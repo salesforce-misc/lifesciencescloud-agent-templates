@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Time Frame</description>
+        <name>Time_Frame</name>
+        <label>Time Frame</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>VisitDateRangeAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Get_Visits</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>timePeriods</name>
+            <value>
+                <elementReference>TimePeriod</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>VisitDateRangeAction</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Format visit data</description>
+        <name>Format_Visit_Data</name>
+        <label>Format Visit Data</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>CurrentVisitData</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Visit #{!VisitCount} | Account: {!Account_Name.Name} | Time: {!Process_Visits.PlannedVisitStartTime} &apos;&lt;br&gt;&apos; </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>VisitResults</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>CurrentVisitData</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>VisitCount</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Initialize variables</description>
+        <name>Initialize_Variables</name>
+        <label>Initialize Variables</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>VisitResults</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>VisitCount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_User_Territory</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set error message when no territory is found for user</description>
+        <name>Set_No_Territory_Error</name>
+        <label>Set No Territory Error</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No territory assignment found for the current user. Please ensure the user is assigned to a territory.</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>VisitResults</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Set error message when no visits are found</description>
+        <name>Set_No_Visits_Error</name>
+        <label>Set No Visits Error</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No visits found for the user&apos;s territory in the specified time period: {!TimePeriod}</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>VisitResults</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Set the Territory ID from the user territory association</description>
+        <name>Set_Territory_Id</name>
+        <label>Set Territory Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>TerritoryId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_User_Territory.Territory2Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Time_Frame</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Check if user has a territory assigned</description>
+        <name>Check_Territory_Found</name>
+        <label>Check Territory Found</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_No_Territory_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Territory Found</defaultConnectorLabel>
+        <rules>
+            <name>Territory_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_User_Territory</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Territory_Id</targetReference>
+            </connector>
+            <label>Territory Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if visits were found</description>
+        <name>Check_Visits_Found</name>
+        <label>Check Visits Found</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_No_Visits_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Visits Found</defaultConnectorLabel>
+        <rules>
+            <name>Visits_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Visits</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Process_Visits</targetReference>
+            </connector>
+            <label>Visits Found</label>
+        </rules>
+    </decisions>
+    <description>Get visits for the current user&apos;s territory based on specified time period</description>
+    <environments>Default</environments>
+    <interviewLabel>Get Visits Simple {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Get Visits Simple</label>
+    <loops>
+        <description>Process each visit</description>
+        <name>Process_Visits</name>
+        <label>Process Visits</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>Get_Visits</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Account_Name</targetReference>
+        </nextValueConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>get account details</description>
+        <name>Account_Name</name>
+        <label>Account Name</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Format_Visit_Data</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Process_Visits.AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Find the territory associated with the current user</description>
+        <name>Get_User_Territory</name>
+        <label>Get User Territory</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Territory_Found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>UserId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>UserTerritory2Association</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Find visits for the user&apos;s territory based on time period</description>
+        <name>Get_Visits</name>
+        <label>Get Visits</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Visits_Found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>TerritoryId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>TerritoryId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>AccountId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>PlannedVisitStartTime</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>Time_Frame.startDate</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>PlannedVisitEndTime</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>Time_Frame.endDate</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Visit</object>
+        <sortField>PlannedVisitStartTime</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Initialize_Variables</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Current visit data being processed</description>
+        <name>CurrentVisitData</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Error message if any</description>
+        <name>ErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Territory ID for the user</description>
+        <name>TerritoryId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Time period for visit search (Today, This Week, Next Week, This Month, Next Month)</description>
+        <name>TimePeriod</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Counter for visit numbering</description>
+        <name>VisitCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>1.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Formatted visit results</description>
+        <name>VisitResults</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

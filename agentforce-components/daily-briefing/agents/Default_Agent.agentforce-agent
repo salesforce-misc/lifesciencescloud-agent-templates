@@ -1,0 +1,112 @@
+{
+  "agentName": "Default_Agent",
+  "displayName": "Default Field Sales Agent",
+  "description": "Default Agentforce agent for field sales representatives with daily briefing, priority account analysis, and conversation starter capabilities",
+  "version": "1.0",
+  "status": "Active",
+  "agentType": "Sales",
+  "language": "en_US",
+  "timezone": "America/New_York",
+  "topics": [
+    {
+      "topicName": "Daily_Briefing_Topic",
+      "priority": 1,
+      "enabled": true
+    },
+    {
+      "topicName": "Priority_Account_Topic",
+      "priority": 2,
+      "enabled": true
+    },
+    {
+      "topicName": "Conversation_Starters_Topic",
+      "priority": 3,
+      "enabled": true
+    }
+  ],
+  "actions": [
+    {
+      "actionName": "Get_Daily_Visits_Action",
+      "enabled": true
+    },
+    {
+      "actionName": "Get_Account_Summaries_Action",
+      "enabled": true
+    },
+    {
+      "actionName": "Calculate_Priority_Metrics_Action",
+      "enabled": true
+    },
+    {
+      "actionName": "Generate_Conversation_Starters_Action",
+      "enabled": true
+    }
+  ],
+  "context": {
+    "requiredContext": [
+      "UserContext.UserId",
+      "UserContext.TerritoryId"
+    ],
+    "optionalContext": [
+      "UserContext.Name",
+      "UserContext.Email",
+      "UserContext.Profile",
+      "UserContext.Role"
+    ]
+  },
+  "response": {
+    "defaultResponse": "I'm here to help you with your daily sales activities. You can ask me to generate your daily briefing, analyze priority accounts, or get conversation starters for your visits.",
+    "errorResponse": "I'm sorry, I encountered an error processing your request. Please try again or contact your administrator.",
+    "fallbackResponse": "I'm not sure I understand your request. You can ask me to generate your daily briefing, analyze priority accounts, or get conversation starters for your visits."
+  },
+  "settings": {
+    "confidenceThreshold": 0.8,
+    "maxResponseLength": 4000,
+    "enableDebugLogging": true,
+    "enableAnalytics": true,
+    "responseFormat": "Text",
+    "enableVoice": true,
+    "enableText": true
+  },
+  "security": {
+    "accessLevel": "User",
+    "permissions": [
+      "Read Visit",
+      "Read Account",
+      "Read ProviderVisit",
+      "Read PrvdAccountTerritorySummary",
+      "Read UserTerritory2Association"
+    ],
+    "dataAccess": "TerritoryBased"
+  },
+  "integration": {
+    "salesforce": {
+      "enabled": true,
+      "apexClasses": [
+        "DailyBriefingAgent",
+        "BriefingData",
+        "BriefingResponse",
+        "AccountSummary",
+        "PriorityAssessment",
+        "ConversationStarter",
+        "AccountRanking"
+      ]
+    },
+    "external": {
+      "enabled": false
+    }
+  },
+  "analytics": {
+    "enabled": true,
+    "trackUsage": true,
+    "trackPerformance": true,
+    "trackErrors": true
+  },
+  "metadata": {
+    "category": "Sales",
+    "tags": ["field-sales", "daily-briefing", "priority-accounts", "conversation-starters", "visits"],
+    "lastModified": "2025-09-05T11:05:00Z",
+    "createdBy": "LSC4CE Team",
+    "version": "1.0"
+  }
+}

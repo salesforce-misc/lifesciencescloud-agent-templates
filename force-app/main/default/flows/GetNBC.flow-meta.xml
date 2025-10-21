@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Formatted Output for NBC</description>
+        <name>NBC_Formatted_Output</name>
+        <label>NBC Formatted Output</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>NBC_Formatted_Output</actionName>
+        <actionType>generatePromptResponse</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>Input:NBC_Results</name>
+            <value>
+                <elementReference>NBCResults</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>NBC_Formatted_Output</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>NextBestCustomerFormattedOutput</assignToReference>
+            <name>promptResponse</name>
+        </outputParameters>
+    </actionCalls>
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Format visit data</description>
+        <name>Format_NBC_Data</name>
+        <label>Format NBC Data</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>CurrentNBCData</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rank: {!Process_NBC.Rank} |Account:  {!Account_Name.Name} | Recommendation Score : {!Process_NBC.TotalScore} |Recommendation Reason: {!Process_NBC.ScoreExplainabilityInfo} &apos;&lt;br&gt;&apos; </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NBCResults</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>CurrentNBCData</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NBCCount</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Process_NBC</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Initialize variables</description>
+        <name>Initialize_Variables</name>
+        <label>Initialize Variables</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>NBCResults</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NBCCount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_User_Territory</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set error message when no territory is found for user</description>
+        <name>Set_No_Territory_Error</name>
+        <label>Set No Territory Error</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No territory assignment found for the current user. Please ensure the user is assigned to a territory.</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NBCResults</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Set error message when no visits are found</description>
+        <name>Set_No_VNBC_Error</name>
+        <label>Set No NBC Error</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No NBC found for the user&apos;s territory in the specified time period: {!TimePeriod}</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NBCResults</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Set the Territory ID from the user territory association</description>
+        <name>Set_Territory_Id</name>
+        <label>Set Territory Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>TerritoryId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_User_Territory.Territory2Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_NBC</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Check if NBC were found</description>
+        <name>Check_NBC_Found</name>
+        <label>Check NBC Found</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_No_VNBC_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No NBC Found</defaultConnectorLabel>
+        <rules>
+            <name>NBC_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_NBC</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Process_NBC</targetReference>
+            </connector>
+            <label>NBC Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if user has a territory assigned</description>
+        <name>Check_Territory_Found</name>
+        <label>Check Territory Found</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_No_Territory_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Territory Found</defaultConnectorLabel>
+        <rules>
+            <name>Territory_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_User_Territory</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Territory_Id</targetReference>
+            </connector>
+            <label>Territory Found</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>GetNBC {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>GetNBC</label>
+    <loops>
+        <description>Process each NBC</description>
+        <name>Process_NBC</name>
+        <label>Process NBC</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>Get_NBC</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Account_Name</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>NBC_Formatted_Output</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>get account details</description>
+        <name>Account_Name</name>
+        <label>Account Name</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Format_NBC_Data</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Process_NBC.AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Find Territory Account Score records for the user&apos;s territory</description>
+        <name>Get_NBC</name>
+        <label>Get NBC</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_NBC_Found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>TerritoryId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>TerritoryId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>TerritoryAccountScore</object>
+        <sortField>Rank</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Find the territory associated with the current user</description>
+        <name>Get_User_Territory</name>
+        <label>Get User Territory</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Territory_Found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>UserId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>UserTerritory2Association</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Initialize_Variables</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Current NBC data being processed</description>
+        <name>CurrentNBCData</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Error message if any</description>
+        <name>ErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Counter for NBC numbering</description>
+        <name>NBCCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>1.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Formatted NBC results</description>
+        <name>NBCResults</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Formatted Output for Next Best Customer results</description>
+        <name>NextBestCustomerFormattedOutput</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>NumberOfNBC</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Territory ID for the user</description>
+        <name>TerritoryId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Time period for visit search (Today, This Week, Next Week, This Month, Next Month)</description>
+        <name>TimePeriod</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

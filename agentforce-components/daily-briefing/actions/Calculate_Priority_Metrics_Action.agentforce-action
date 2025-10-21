@@ -1,0 +1,133 @@
+{
+  "actionName": "Calculate_Priority_Metrics_Action",
+  "displayName": "Calculate Priority Metrics Action",
+  "description": "Calculates priority metrics and rankings for accounts based on visit activity and performance",
+  "version": "1.0",
+  "status": "Active",
+  "actionType": "Apex",
+  "apexClass": "DailyBriefingAgent",
+  "apexMethod": "calculatePriorityMetrics",
+  "parameters": [
+    {
+      "name": "visits",
+      "type": "List<Visit>",
+      "required": true,
+      "description": "List of visits to analyze for priority metrics",
+      "source": "Get_Daily_Visits_Action.output"
+    }
+  ],
+  "output": {
+    "type": "PriorityAssessment",
+    "description": "Priority assessment with metrics and rankings",
+    "fields": [
+      {
+        "name": "totalAccounts",
+        "type": "Integer",
+        "description": "Total number of accounts"
+      },
+      {
+        "name": "accountsWithRecentActivity",
+        "type": "Integer",
+        "description": "Number of accounts with recent activity"
+      },
+      {
+        "name": "averageCompletionRate",
+        "type": "Double",
+        "description": "Average completion rate"
+      },
+      {
+        "name": "priorityAccountId",
+        "type": "String",
+        "description": "Priority account ID"
+      },
+      {
+        "name": "priorityAccountName",
+        "type": "String",
+        "description": "Priority account name"
+      },
+      {
+        "name": "priorityReason",
+        "type": "String",
+        "description": "Reason for priority"
+      },
+      {
+        "name": "strategicFocus",
+        "type": "String",
+        "description": "Strategic focus area"
+      },
+      {
+        "name": "accountRankings",
+        "type": "List<AccountRanking>",
+        "description": "List of account rankings",
+        "fields": [
+          {
+            "name": "accountId",
+            "type": "String",
+            "description": "Account ID"
+          },
+          {
+            "name": "accountName",
+            "type": "String",
+            "description": "Account name"
+          },
+          {
+            "name": "rank",
+            "type": "Integer",
+            "description": "Rank position"
+          },
+          {
+            "name": "reason",
+            "type": "String",
+            "description": "Ranking reason"
+          },
+          {
+            "name": "score",
+            "type": "Double",
+            "description": "Priority score"
+          },
+          {
+            "name": "visitCount",
+            "type": "Integer",
+            "description": "Visit count"
+          },
+          {
+            "name": "completionRate",
+            "type": "Double",
+            "description": "Completion rate"
+          },
+          {
+            "name": "lastVisit",
+            "type": "DateTime",
+            "description": "Last visit date"
+          },
+          {
+            "name": "status",
+            "type": "String",
+            "description": "Account status"
+          }
+        ]
+      },
+      {
+        "name": "trends",
+        "type": "String",
+        "description": "Trend analysis"
+      },
+      {
+        "name": "recommendations",
+        "type": "String",
+        "description": "Recommendations"
+      }
+    ]
+  },
+  "errorHandling": {
+    "onError": "Return empty PriorityAssessment and log error",
+    "errorMessage": "Unable to calculate priority metrics",
+    "fallbackValue": "{}"
+  },
+  "metadata": {
+    "category": "Analytics",
+    "tags": ["priority", "metrics", "ranking", "analysis", "field-sales"],
+    "lastModified": "2025-09-05T11:05:00Z",
+    "createdBy": "LSC4CE Team"
+  }
+}

@@ -1,0 +1,25 @@
+Format the output of the visit results properly
+
+
+
+Input Format:
+
+Visit # [VisitCount] | Account: [Account Name] | Time: [Planned Start Time] '<br>' 
+Visit # [VisitCount] | Account: [Account Name] | Time: [Planned Start Time]...
+
+
+Output:
+
+📋 **Visit Details**
+
+[VisitCount] . ** [Account Name] **
+🕐 Time: [Planned Start Time]
+
+[VisitCount] . ** [Account Name] **
+🕐 Time: [Planned Start Time]
+
+
+
+
+INPUT:
+{!$Input:VisitResults}

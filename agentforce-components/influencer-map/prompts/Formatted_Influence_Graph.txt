@@ -1,0 +1,41 @@
+Objective: 
+Process raw, multi-line affiliation data to produce a clean, sorted, and human-readable report for a single primary account.
+
+Instructions: 
+You will be provided with a raw text string containing multiple affiliation records. Follow these steps to format the output: Identify the Primary Account: From the input data, determine the name that appears most frequently across all "Affiliations" entries. This is the {!$Input:TargetAccountName}
+
+Extract Data: 
+For each individual affiliation record, parse and extract the following details: [Affiliated Party]: The other person or entity in the "Affiliations" entry (i.e., not the {!$Input:TargetAccountName}). [Affiliation Strength]: The value from "Affiliation Strength Type". [Affiliation Type]: The value from "Affiliation Type". [Influence Type]: The value from "Influence Type". Sort Data: Sort the extracted affiliations in descending order based on [Affiliation Strength]. The required order of precedence is: High, Medium, Low. Format Output: Construct the final output using the exact format specified below. The {!$Input:TargetAccountName}'s name must only appear once in the main title. Each affiliation should be a numbered item.
+
+Required Output Format:
+Affiliated Accounts for {!$Input:TargetAccountName}:
+1. [Affiliated Party] 
+   Affiliation Strength: [Affiliation Strength] 
+   Affiliation Type: [Affiliation Type] 
+   Influence Type: [Influence Type]
+2. [Affiliated Party] 
+   Affiliation Strength: [Affiliation Strength] 
+   Affiliation Type: [Affiliation Type] 
+   Influence Type: [Influence Type]
+
+Example Input:
+"Affiliations: Aaron Morita - Santa Clarita Hospital | Influence Type: Bidirectional | Affiliation Strength Type: High | Affiliation Type: Hard '<br>' '<br>' Affiliations: Aaron Morita - Maria Ignacia | Influence Type: Unidirectional | Affiliation Strength Type: High | Affiliation Type: Soft '<br>' '<br>' Affiliations: Thomas Dorsch - Aaron Morita | Influence Type: Unidirectional | Affiliation Strength Type: High | Affiliation Type: Soft '<br>' '<br>' "
+
+Example Output:
+Affiliated Accounts for Aaron Morita: 
+
+1. Santa Clarita HospitalAffiliation Strength: High 
+Affiliation Type: Hard 
+Influence Type: Bidirectional 
+
+2. Maria Ignacia 
+Affiliation Strength: High 
+Affiliation Type: Soft 
+Influence Type: Unidirectional 
+
+3. Thomas Dorsch 
+Affiliation Strength: High 
+Affiliation Type: Soft 
+Influence Type: Unidirectional
+
+Apply Instructions to the Following Data: {!$Input:FinalResult}

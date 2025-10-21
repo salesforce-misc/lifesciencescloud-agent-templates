@@ -1,0 +1,19 @@
+# Salesforce
+.sf/
+.sfdx/
+.sf/
+.husky/
+node_modules/
+*.log
+*.md
+!README.md
+.DS_Store
+.lwc
+.aura
+.force
+*.json
+!package.json
+!sfdx-project.json
+!package-lock.json
+!.gitignore
+

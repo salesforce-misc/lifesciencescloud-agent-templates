@@ -1,0 +1,39 @@
+- Account Name: Beta Therapeutics
+- Score: 88.12
+- Explanation: Strong historic engagement (+22.4) and large territory potential (+15.6) contributed most to the score.
+
+...and so on for each FlowResult provided.
+
+ADDITIONAL RULES:
+- Include only accounts present in FlowResults.
+- If two accounts share the same rank, order them by TotalScore descending.
+- If AccountName cannot be resolved for an AccountID, output the AccountID in place of the AccountName and append: "(name unavailable)".
+- Do not output any extra commentary, metadata, or JSON—only the ordered list in the format above.
+
+Now produce the "Next Best Customers" list using the provided FlowResults and optional Accounts mapping.
+
+Example FlowResults (input)
+
+Rank: 1 |Account: Thomas Dorsch | Recommendation Score : 65 |Recommendation Reason: { "scores": { "Last Visit": 25, "Message Engagement": 20, "Immunexis TRx Growth": 18, "Immunexis NRx Trend": 15, "Open Opportunities": 12, "Market Share Growth": 10, "High Value Patients": 10, "Patient Initiations": 8, "Event Attendance": 5, "Formulary Access": 5, "Competitive Activity": 3, "customPicklist-Account.Segmentation__c": 2 }, "metrics": { "Last Visit": "Visited on 07/22", "Message Engagement": "Discussed Immunexis on 08/05", "Immunexis TRx Growth": "+12% last quarter", "Immunexis NRx Trend": "+8% month over month", "Open Opportunities": "2 in pipeline", "Market Share Growth": "+5% YoY", "High Value Patients": "12 eligible patients identified", "Patient Initiations": "+5 new starts in August", "Event Attendance": "Joined Immunexis webinar on 09/05", "Formulary Access": "Tier 2 preferred on major regional payer", "Competitive Activity": "2 recent mentions of competitor therapy", "customPicklist-Account.Segmentation__c": "Tier A High Priority Doctor" }, "customLabels": { "customPicklist-Account.Segmentation__c": "Segmentation" } } '<br>' Rank: 2 |Account: Aaron Morita | Recommendation Score : 54 |Recommendation Reason: { "scores": { "Last Visit": 25, "Message Engagement": 20, "Immunexis TRx Growth": 18, "Immunexis NRx Trend": 15, "Open Opportunities": 12, "Market Share Growth": 10, "High Value Patients": 10, "Patient Initiations": 8, "Event Attendance": 5, "Formulary Access": 5, "Competitive Activity": 3, "customPicklist-Account.Segmentation__c": 2 }, "metrics": { "Last Visit": "Visited on 07/22", "Message Engagement": "Discussed Immunexis on 08/05", "Immunexis TRx Growth": "+12% last quarter", "Immunexis NRx Trend": "+8% month over month", "Open Opportunities": "2 in pipeline", "Market Share Growth": "+5% YoY", "High Value Patients": "12 eligible patients identified", "Patient Initiations": "+5 new starts in August", "Event Attendance": "Joined Immunexis webinar on 09/05", "Formulary Access": "Tier 2 preferred on major regional payer", "Competitive Activity": "2 recent mentions of competitor therapy", "customPicklist-Account.Segmentation__c": "Tier A High Priority Doctor" }, "customLabels": { "customPicklist-Account.Segmentation__c": "Segmentation" } } '<br>' Rank: 3 |Account: Abhinav Sinha | Recommendation Score : 45 |Recommendation Reason: { "scores": { "Last Visit": 25, "Message Engagement": 20, "Immunexis TRx Growth": 18, "Immunexis NRx Trend": 15, "Open Opportunities": 12, "Market Share Growth": 10, "High Value Patients": 10, "Patient Initiations": 8, "Event Attendance": 5, "Formulary Access": 5, "Competitive Activity": 3, "customPicklist-Account.Segmentation__c": 2 }, "metrics": { "Last Visit": "Visited on 07/22", "Message Engagement": "Discussed Immunexis on 08/05", "Immunexis TRx Growth": "+12% last quarter", "Immunexis NRx Trend": "+8% month over month", "Open Opportunities": "2 in pipeline", "Market Share Growth": "+5% YoY", "High Value Patients": "12 eligible patients identified", "Patient Initiations": "+5 new starts in August", "Event Attendance": "Joined Immunexis webinar on 09/05", "Formulary Access": "Tier 2 preferred on major regional payer", "Competitive Activity": "2 recent mentions of competitor therapy", "customPicklist-Account.Segmentation__c": "Tier A High Priority Doctor" }, "customLabels": { "customPicklist-Account.Segmentation__c": "Segmentation" } } '<br>' Rank: 4 |Account: Mary Malloy | Recommendation Score : 43 |Recommendation Reason: { "scores": { "Last Visit": 25, "Message Engagement": 20, "Immunexis TRx Growth": 18, "Immunexis NRx Trend": 15, "Open Opportunities": 12, "Market Share Growth": 10, "High Value Patients": 10, "Patient Initiations": 8, "Event Attendance": 5, "Formulary Access": 5, "Competitive Activity": 3, "customPicklist-Account.Segmentation__c": 2 }, "metrics": { "Last Visit": "Visited on 07/22", "Message Engagement": "Discussed Immunexis on 08/05", "Immunexis TRx Growth": "+12% last quarter", "Immunexis NRx Trend": "+8% month over month", "Open Opportunities": "2 in pipeline", "Market Share Growth": "+5% YoY", "High Value Patients": "12 eligible patients identified", "Patient Initiations": "+5 new starts in August", "Event Attendance": "Joined Immunexis webinar on 09/05", "Formulary Access": "Tier 2 preferred on major regional payer", "Competitive Activity": "2 recent mentions of competitor therapy", "customPicklist-Account.Segmentation__c": "Tier A High Priority Doctor" }, "customLabels": { "customPicklist-Account.Segmentation__c": "Segmentation" } } '<br>' Rank: 5 |Account: Maria Ignacia | Recommendation Score : 40 |Recommendation Reason: { "scores": { "Last Visit": 25, "Message Engagement": 20, "Immunexis TRx Growth": 18, "Immunexis NRx Trend": 15, "Open Opportunities": 12, "Market Share Growth": 10, "High Value Patients": 10, "Patient Initiations": 8, "Event Attendance": 5, "Formulary Access": 5, "Competitive Activity": 3, "customPicklist-Account.Segmentation__c": 2 }, "metrics": { "Last Visit": "Visited on 07/22", "Message Engagement": "Discussed Immunexis on 08/05", "Immunexis TRx Growth": "+12% last quarter", "Immunexis NRx Trend": "+8% month over month", "Open Opportunities": "2 in pipeline", "Market Share Growth": "+5% YoY", "High Value Patients": "12 eligible patients identified", "Patient Initiations": "+5 new starts in August", "Event Attendance": "Joined Immunexis webinar on 09/05", "Formulary Access": "Tier 2 preferred on major regional payer", "Competitive Activity": "2 recent mentions of competitor therapy", "customPicklist-Account.Segmentation__c": "Tier A High Priority Doctor" }, "customLabels": { "customPicklist-Account.Segmentation__c": "Segmentation" } } '<br>' "
+
+Example OUTPUT (what the LLM should return)
+
+📊 Next Best Customer Recommendations
+Rank 1 – Thomas Dorsch
+Recommendation Score: 65
+Key Drivers: Recently visited (07/22), actively engaged in discussion about Immunexis (08/05), and showing strong TRx (+12% last quarter) and NRx growth (+8% MoM) with open opportunities (2 in pipeline).
+
+Rank 2 – Aaron Morita
+Recommendation Score: 54
+Key Drivers: Recent visit and strong message engagement, with positive prescription growth trends (+12% TRx, +8% NRx) and multiple eligible high-value patients.
+
+Rank 3 – Abhinav Sinha
+Recommendation Score: 45
+Key Drivers: Engaged post recent visit and discussion, showing moderate prescription growth and opportunities, with identified high-value patient pool.
+
+Rank 4 – Mary Malloy
+Recommendation Score: 43
+Key Drivers: Recent engagement, consistent prescription growth, and pipeline opportunities, supported by event participation and formulary access.
+Rank 5 – Maria Ignacia
+Recommendation Score: 40
+Key Drivers: Visited recently, engaged in Immunexis discussion, demonstrating steady prescription growth with identified high-value patients and formulary advantage.
