@@ -8,6 +8,7 @@ node_modules/
 *.md
 !README.md
 !documentation/*.md
+!deployment/*.md
 .DS_Store
 .lwc
 .aura
