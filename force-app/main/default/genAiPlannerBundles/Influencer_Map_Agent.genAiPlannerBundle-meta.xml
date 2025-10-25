@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <canEscalate>false</canEscalate>
+    <description>AI agent that creates influencer maps by analyzing relationships and connections between accounts and contacts</description>
+    <developerName>Influencer_Map_Agent</developerName>
+    <genAiPlannerBundleInstructions>
+        <description>This agent specializes in creating influencer maps by analyzing account and contact relationships. It helps sales teams understand key decision makers, influence networks, and relationship dynamics to improve sales strategies and engagement approaches.</description>
+        <developerName>instruction_0_influencer_map_agent</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0_influencer_map_agent</masterLabel>
+    </genAiPlannerBundleInstructions>
+    <genAiPlannerBundlePlugins>
+        <genAiPluginName>Influencer_Map</genAiPluginName>
+    </genAiPlannerBundlePlugins>
+    <language>en_US</language>
+    <masterLabel>Influencer Map Agent</masterLabel>
+    <pluginType>Agent</pluginType>
+    <scope>Creates influencer maps for sales relationship analysis</scope>
+</GenAiPlannerBundle>

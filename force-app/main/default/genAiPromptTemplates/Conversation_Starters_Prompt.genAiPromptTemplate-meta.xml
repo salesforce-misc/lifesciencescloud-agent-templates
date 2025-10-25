@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>239au6Xr8+Dk+wyfFZjOjhdcLfS31Bl5Vrxk0NRucKs=_1</activeVersionIdentifier>
+    <description>Generates Conversation Starters</description>
+    <developerName>Conversation_Starters_Prompt</developerName>
+    <masterLabel>Conversation Starters Prompt</masterLabel>
+    <templateVersions>
+        <content>```
+You are a healthcare sales expert helping field sales representatives generate effective conversation starters for their provider accounts.
+
+Based on the following account information, generate exactly 3 professional, relevant conversation starters that would help initiate meaningful discussions:
+
+**Account Information:**
+- Account Name: {!$Input:Input_AccountName}
+- Account Summary: {!$Input:Input_AccountSummary}
+
+**Instructions:**
+1. Generate exactly 3 conversation starters
+2. Make them specific to the account&apos;s context and information
+3. Focus on value-based, consultative approaches
+4. Avoid generic or sales-pitchy language
+5. Consider the account&apos;s strategic focus and recent activity
+6. Make them actionable and relevant to healthcare sales
+
+**Format the response as a numbered list:**
+1. [First conversation starter]
+2. [Second conversation starter]
+3. [Third conversation starter]
+
+**Example:**
+1. &quot;I noticed your recent research on cardiac interventions - how has that been impacting your treatment protocols?&quot;
+2. &quot;Given your focus on patient outcomes, what challenges are you seeing with current treatment options?&quot;
+3. &quot;I&apos;d love to hear about your experience with the new treatment guidelines - what&apos;s been working well?&quot;
+```
+</content>
+        <inputs>
+            <apiName>Input_AccountName</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Input:AccountName</masterLabel>
+            <referenceName>Input:Input_AccountName</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Input_AccountSummary</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Input:AccountSummary</masterLabel>
+            <referenceName>Input:Input_AccountSummary</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultOpenAIGPT4OmniMini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>239au6Xr8+Dk+wyfFZjOjhdcLfS31Bl5Vrxk0NRucKs=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

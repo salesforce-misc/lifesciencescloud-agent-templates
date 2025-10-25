@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <canEscalate>false</canEscalate>
+    <description>AI agent that identifies and recommends the next best customers based on territory data and scoring criteria</description>
+    <developerName>NextBestCustomer_Agent</developerName>
+    <genAiPlannerBundleInstructions>
+        <description>This agent specializes in identifying the next best customers by analyzing territory data, account scores, and business criteria. It provides prioritized customer recommendations to help sales teams focus their efforts on the most promising opportunities.</description>
+        <developerName>instruction_0_nextbestcustomer_agent</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0_nextbestcustomer_agent</masterLabel>
+    </genAiPlannerBundleInstructions>
+    <genAiPlannerBundlePlugins>
+        <genAiPluginName>NextBestCustomer</genAiPluginName>
+    </genAiPlannerBundlePlugins>
+    <language>en_US</language>
+    <masterLabel>Next Best Customer Agent</masterLabel>
+    <pluginType>Agent</pluginType>
+    <scope>Identifies next best customers for sales teams</scope>
+</GenAiPlannerBundle>

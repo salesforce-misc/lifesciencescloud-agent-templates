@@ -25,7 +25,8 @@ public class VisitDateRangeCalculator {
             response.timePeriod = request.timePeriod;
             
             DateTime now = DateTime.now();
-            DateTime startDate, endDate;
+            DateTime startDate;
+            DateTime endDate;
             
             if (request.timePeriod == 'Today') {
                 // Today: Start of day to end of day
@@ -61,9 +62,9 @@ public class VisitDateRangeCalculator {
                 startDate = DateTime.newInstance(startOfNextMonth, Time.newInstance(0, 0, 0, 0));
                 endDate = DateTime.newInstance(endOfNextMonth, Time.newInstance(23, 59, 59, 999));
             } else {
-                // Default to Today if unknown time period
-                startDate = DateTime.newInstance(now.date(), Time.newInstance(0, 0, 0, 0));
-                endDate = DateTime.newInstance(now.date(), Time.newInstance(23, 59, 59, 999));
+                // Throw error for unknown time period
+                throw new IllegalArgumentException('Unsupported time period: ' + request.timePeriod + 
+                    '. Supported periods: Today, Tomorrow, This Week, Next Week, This Month, Next Month');
             }
             
             response.startDate = startDate;

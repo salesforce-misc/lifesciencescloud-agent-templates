@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <canEscalate>false</canEscalate>
+    <description>AI agent that processes and formats visit notes for sales representatives</description>
+    <developerName>PostCallVisitNotes_Agent</developerName>
+    <genAiPlannerBundleInstructions>
+        <description>This agent specializes in processing post-call visit notes by extracting key information, formatting content, and providing structured insights. It helps sales teams maintain accurate records and identify follow-up actions from customer interactions.</description>
+        <developerName>instruction_0_postcall_visit_notes_agent</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0_postcall_visit_notes_agent</masterLabel>
+    </genAiPlannerBundleInstructions>
+    <genAiPlannerBundlePlugins>
+        <genAiPluginName>PostCallVisitNotes</genAiPluginName>
+    </genAiPlannerBundlePlugins>
+    <language>en_US</language>
+    <masterLabel>Post-Call Visit Notes Agent</masterLabel>
+    <pluginType>Agent</pluginType>
+    <scope>Processes and formats visit notes for sales teams</scope>
+</GenAiPlannerBundle>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <canEscalate>false</canEscalate>
+    <description>Handles requests for daily briefings, visit summaries, and priority account information for field sales representatives</description>
+    <developerName>Daily_Briefing</developerName>
+    <genAiFunctions>
+        <functionName>Generate_Complete_Daily_Briefing</functionName>
+    </genAiFunctions>
+    <genAiPluginInstructions>
+        <description>This topic handles requests for daily briefings from field sales representatives. It uses the DailyBriefingOrchestrator to generate comprehensive briefings that include:
+1. Today&apos;s scheduled visits with detailed information
+2. Account insights and territory summaries
+3. Priority account analysis and rankings
+4. Personalized conversation starters for each account
+5. Action items and recommendations
+The topic should:
+- Personalize responses with the user&apos;s name and territory information
+- Handle different focus areas (priority, visits, accounts, conversation, all)
+- Provide helpful fallback responses for various error scenarios
+- Format responses with clear sections, emojis, and markdown formatting
+- Always include actionable recommendations and next steps
+- Respect territory boundaries and data access restrictions</description>
+        <developerName>instruction_0_1757658598272</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0_1757658598272</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>Recognize the following intent patterns:
+1. Daily Briefing Requests:
+   - &quot;Generate my daily briefing&quot;
+   - &quot;Show me today&apos;s agenda&quot;
+   - &quot;What&apos;s on my schedule today?&quot;
+   - &quot;Give me my daily briefing&quot;
+2. Priority-Focused Requests:
+   - &quot;Show me my priority accounts&quot;
+   - &quot;What are my priority accounts for today?&quot;
+   - &quot;Give me priority account analysis&quot;
+3. Visit-Focused Requests:
+   - &quot;What visits do I have today?&quot;
+   - &quot;Show me my visit schedule&quot;
+   - &quot;What&apos;s on my calendar today?&quot;
+4. Account-Focused Requests:
+   - &quot;Give me account insights&quot;
+   - &quot;Show me account summaries&quot;
+   - &quot;What do I need to know about my accounts?&quot;
+5. Conversation-Focused Requests:
+   - &quot;Help me prepare for my meetings&quot;
+   - &quot;Give me conversation starters&quot;
+   - &quot;What should I talk about with my accounts?&quot;
+6. Date-Specific Requests:
+   - &quot;Generate briefing for [date]&quot;
+   - &quot;Show me visits for [date]&quot;
+   - &quot;What&apos;s on my schedule for [date]?&quot;</description>
+        <developerName>instruction_1_1757658598277</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_1_1757658598277</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>Process entities as follows:
+1. Date Entity:
+   - Default to &quot;today&quot; if not specified
+   - Support relative dates: &quot;today&quot;, &quot;tomorrow&quot;, &quot;yesterday&quot;
+   - Support specific dates: &quot;January 15&quot;, &quot;1/15/2024&quot;, &quot;2024-01-15&quot;
+   - Validate date is not too far in the past or future
+2. Focus Entity:
+   - Default to &quot;all&quot; if not specified
+   - Map user intent to focus values:
+     * Priority requests → &quot;priority&quot;
+     * Visit requests → &quot;visits&quot;
+     * Account requests → &quot;accounts&quot;
+     * Conversation requests → &quot;conversation&quot;
+     * General requests → &quot;all&quot;
+3. AccountName Entity:
+   - Use for account-specific briefings
+   - Validate account exists in user&apos;s territory
+   - Provide fallback if account not found</description>
+        <developerName>instruction_2_1757658598277</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_2_1757658598277</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>Generate responses with the following structure:
+1. Header Section:
+   - Date and user information
+   - Territory context
+   - Briefing type based on focus
+2. Content Sections (based on focus):
+   - Visits: Detailed visit information with timing and status
+   - Accounts: Account insights and summaries
+   - Priority: Priority analysis and rankings
+   - Conversation: Conversation starters and talking points
+   - All: Comprehensive briefing with all sections
+3. Action Items:
+   - Always include actionable recommendations
+   - Suggest next steps based on the briefing content
+   - Provide follow-up activities
+4. Footer:
+   - Generation timestamp
+   - Data freshness information
+   - Contact information for issues</description>
+        <developerName>instruction_3_1757658598277</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_3_1757658598277</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>Handle errors gracefully with appropriate fallback responses:
+1. No Visits Found:
+   - &quot;I couldn&apos;t find any visits scheduled for [date]. You might want to check your calendar or plan some visits for the day.&quot;
+2. User Not Found:
+   - &quot;I couldn&apos;t find your user information. Please contact your administrator to ensure your account is properly set up.&quot;
+3. No Territory Assigned:
+   - &quot;You don&apos;t have a territory assigned. Please contact your administrator to set up your territory assignment.&quot;
+4. No Account Data:
+   - &quot;I couldn&apos;t retrieve account information for your territory. Please try again later or contact your administrator.&quot;
+5. General Errors:
+   - &quot;I encountered an error while generating your daily briefing. Please try again later or contact your administrator if the issue persists.&quot;
+6. Invalid Date:
+   - &quot;I couldn&apos;t process that date. Please try using a specific date like &apos;today&apos;, &apos;tomorrow&apos;, or a date like &apos;January 15&apos;.&quot;</description>
+        <developerName>instruction_4_1757658598277</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_4_1757658598277</masterLabel>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <masterLabel>Daily Briefing</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>Your job is to generate comprehensive daily briefings for field sales representatives</scope>
+</GenAiPlugin>

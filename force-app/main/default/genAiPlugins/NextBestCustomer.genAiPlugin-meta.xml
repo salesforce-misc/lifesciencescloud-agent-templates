@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <canEscalate>false</canEscalate>
+    <description>This topic is triggered when a user asks for recommendations on which customers or accounts to meet with next. It directly calls the GetNBC action to retrieve this information and presents the list to the user. No further input is required from the user.Example Phrases (Utterances)
+&quot;who else could I meet with?&quot;
+
+&quot;recommend top account for me&quot;
+
+&quot;who are the next best customers&quot;
+
+&quot;who are the next best accounts&quot;
+
+&quot;show me the next best accounts&quot;
+
+&quot;find my top accounts&quot;
+
+&quot;who should I target next?&quot;
+
+&quot;suggest some customers&quot;</description>
+    <developerName>NextBestCustomer</developerName>
+    <genAiPluginInstructions>
+        <description>Start: The topic begins when the user&apos;s request matches one of the example phrases.
+
+Execute Action: Immediately call the Action: GetNBC.
+
+Display Results: Present the list of accounts returned by the GetNBC action to the user with a brief introductory message.
+
+Example Response: &quot;Here are your next best accounts to connect with:&quot; [List from GetNBC]</description>
+        <developerName>instruction_0_1757916763962</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0_1757916763962</masterLabel>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <masterLabel>NextBestCustomer</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>Your job is to assist in the preparation of customer list that Field Sales rep should consider while planning for a week or day or even ad-hoc.</scope>
+</GenAiPlugin>

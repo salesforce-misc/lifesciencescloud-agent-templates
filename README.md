@@ -1,417 +1,277 @@
-# LSC4CE Agentforce Solutions
+# lifesciencescloud-agent-templates
 
-This repository contains all Agentforce components and dependencies for the LSC4CE project, providing comprehensive conversational AI capabilities for field sales representatives.
+![Agentforce Logo](https://via.placeholder.com/200x100/0070D2/FFFFFF?text=Agentforce)
 
-## 🎯 Components
+Welcome to the lifesciencescloud-agent-templates, a comprehensive solution for deploying and managing Salesforce Agentforce agents. This package provides a complete framework for creating, deploying, and managing AI-powered agents across different business scenarios.
 
-### 1. Daily Briefing Agent
-- **Purpose**: Generates on-demand daily briefings for field sales representatives
-- **Features**: Visit schedules, priority accounts, conversation starters
-- **Location**: `agentforce-components/daily-briefing/`
+The lifesciencescloud-agent-templates showcases **Agentforce Agents**, **GenAI Functions**, and **Custom Business Logic**.
 
-**Topic Configuration:**
-- **Name**: Daily Briefing
-- **API Name**: `Daily_Briefing_16jWs000000Qc3F`
-- **Classification Description**: Handles requests for daily briefings, visit summaries, and priority account information for field sales representatives
-- **Scope**: Your job is to generate comprehensive daily briefings for field sales representatives
+## Table of Contents
 
-**Instructions (verbatim):**
+- [Installation](#installation)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Usage](#usage)
+- [Troubleshooting](#troubleshooting)
+- [Development](#development)
+- [Contributing](#contributing)
 
-**Instruction 1:**
-This topic handles requests for daily briefings from field sales representatives. It uses the DailyBriefingOrchestrator to generate comprehensive briefings that include:
-1. Today's scheduled visits with detailed information
-2. Account insights and territory summaries
-3. Priority account analysis and rankings
-4. Personalized conversation starters for each account
-5. Action items and recommendations
-The topic should:
-- Personalize responses with the user's name and territory information
-- Handle different focus areas (priority, visits, accounts, conversation, all)
-- Provide helpful fallback responses for various error scenarios
-- Format responses with clear sections, emojis, and markdown formatting
-- Always include actionable recommendations and next steps
-- Respect territory boundaries and data access restrictions
+## Installation
 
-**Instruction 2:**
-Recognize the following intent patterns:
-1. Daily Briefing Requests:
-- "Generate my daily briefing"
-- "Show me today's agenda"
-- "What's on my schedule today?"
-- "Give me my daily briefing"
-2. Priority-Focused Requests:
-- "Show me my priority accounts"
-- "What are my priority accounts for today?"
-- "Give me priority account analysis"
-3. Visit-Focused Requests:
-- "What visits do I have today?"
-- "Show me my visit schedule"
-- "What's on my calendar today?"
-4. Account-Focused Requests:
-- "Give me account insights"
-- "Show me account summaries"
-- "What do I need to know about my accounts?"
-5. Conversation-Focused Requests:
-- "Help me prepare for my meetings"
-- "Give me conversation starters"
-- "What should I talk about with my accounts?"
-6. Date-Specific Requests:
-- "Generate briefing for [date]"
-- "Show me visits for [date]"
-- "What's on my schedule for [date]?"
+### Requirements
 
-**Instruction 3:**
-Process entities as follows:
-1. Date Entity:
-- Default to "today" if not specified
-- Support relative dates: "today", "tomorrow", "yesterday"
-- Support specific dates: "January 15", "1/15/2024", "2024-01-15"
-- Validate date is not too far in the past or future
-2. Focus Entity:
-- Default to "all" if not specified
-- Map user intent to focus values:
-* Priority requests → "priority"
-* Visit requests → "visits"
-* Account requests → "accounts"
-* Conversation requests → "conversation"
-* General requests → "all"
-3. AccountName Entity:
-- Use for account-specific briefings
-- Validate account exists in user's territory
-- Provide fallback if account not found
+#### Environment
 
-**Instruction 4:**
-Generate responses with the following structure:
-1. Header Section:
-- Date and user information
-- Territory context
-- Briefing type based on focus
-2. Content Sections (based on focus):
-- Visits: Detailed visit information with timing and status
-- Accounts: Account insights and summaries
-- Priority: Priority analysis and rankings
-- Conversation: Conversation starters and talking points
-- All: Comprehensive briefing with all sections
-3. Action Items:
-- Always include actionable recommendations
-- Suggest next steps based on the briefing content
-- Provide follow-up activities
-4. Footer:
-- Generation timestamp
-- Data freshness information
-- Contact information for issues
+The lifesciencescloud-agent-templates requires licenses for the following features:
 
-**Instruction 5:**
-Handle errors gracefully with appropriate fallback responses:
-1. No Visits Found:
-- "I couldn't find any visits scheduled for [date]. You might want to check your calendar or plan some visits for the day."
-2. User Not Found:
-- "I couldn't find your user information. Please contact your administrator to ensure your account is properly set up."
-3. No Territory Assigned:
-- "You don't have a territory assigned. Please contact your administrator to set up your territory assignment."
-4. No Account Data:
-- "I couldn't retrieve account information for your territory. Please try again later or contact your administrator."
-5. General Errors:
-- "I encountered an error while generating your daily briefing. Please try again later or contact your administrator if the issue persists."
-6. Invalid Date:
-- "I couldn't process that date. Please try using a specific date like 'today', 'tomorrow', or a date like 'January 15'."
+- Agentforce
+- Einstein Platform
+- Custom Objects and Fields
 
-**Example User Inputs:**
-Show daily briefing
-Provide my daily brief
-Provide daily brief for tomorrow
-Provide daily brief from yesterday
+**Trailhead Badge**: Obtain an Org with these features and learn more about the app with the [Quick Start: Explore Agentforce](https://trailhead.salesforce.com) Trailhead badge.
 
-### 2. Influencers Map
-- **Purpose**: Analyzes provider affiliations to identify key relationships
-- **Features**: Introduction paths, network analysis, relationship mapping
-- **Location**: `agentforce-components/influencer-map/`
+> **Important**
+> 
+> Start from a brand-new environment to avoid conflicts with previous work you may have done.
 
-### 3. Get Visits
-- **Purpose**: Retrieves and formats visit schedules
-- **Features**: Territory-based filtering, date range calculations
-- **Location**: `agentforce-components/get-visits/`
+#### Salesforce CLI
 
-### 4. NBC (Next Best Customer) Action
-- **Purpose**: Identifies next best customers for sales focus
-- **Features**: Customer scoring, territory analysis, prediction models
-- **Location**: `agentforce-components/nbc-action/`
+Install the Salesforce CLI or check that your installed CLI version is greater than `2.109.6` by running `sf -v` in a terminal.
 
-**Topic Configuration:**
-- **Name**: NextBestCustomer
-- **API Name**: `NextBestCustomer`
-- **Classification Description**: This topic is triggered when a user asks for recommendations on which customers or accounts to meet with next. It directly calls the GetNBC action to retrieve this information and presents the list to the user. No further input is required from the user.
+If you need to update the Salesforce CLI, either run `sf update` or `npm install --global @salesforce/cli` depending on how you installed the CLI.
 
-**Example Phrases (Utterances):**
-- "who else could I meet with?"
-- "recommend top account for me"
-- "who are the next best customers"
-- "who are the next best accounts"
-- "show me the next best accounts"
-- "find my top accounts"
-- "who should I target next?"
-- "suggest some customers"
+### Step 1: Feature Activation
 
-**Scope:**
-Your job is to assist in the preparation of customer list that Field Sales rep should consider while planning for a week or day or even ad-hoc.
+1. Make sure that Agentforce is enabled in your org.
+   To check this, go to **Setup** → **Agentforce Agents**. The page should show available agents if Agentforce is properly configured.
 
-**Instructions (verbatim):**
+2. From **Setup**, go to **Einstein Setup** and click **Turn on Einstein**.
 
-**Instruction 1:**
-Start: The topic begins when the user's request matches one of the example phrases.
+3. From **Setup**, go to **Agentforce Agents** and toggle on **Agentforce**.
 
-**Instruction 2:**
-Execute Action: Immediately call the Action: GetNBC.
+### Step 2: Package Deployment
 
-**Instruction 3:**
-Display Results: Present the list of accounts returned by the GetNBC action to the user with a brief introductory message.
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/salesforce-misc/lifesciencescloud-agent-templates
+   cd lifesciencescloud-agent-templates
+   ```
 
-**Instruction 4:**
-Example Response: "Here are your next best accounts to connect with:" [List from GetNBC]
+2. Authorize your org with the Salesforce CLI, set it as the default org for this project and save an alias (`agentforce-org` in the command below):
+   ```bash
+   sf org login web -s -a agentforce-org
+   ```
 
-**Example User Inputs:**
-- "who else could I meet with?"
-- "recommend top account for me"
-- "who are the next best customers"
-- "who are the next best accounts"
-- "show me the next best accounts"
-- "find my top accounts"
-- "who should I target next?"
-- "suggest some customers"
+3. Deploy the complete package:
+   ```bash
+   ./scripts/deploy.sh agentforce-org
+   ```
 
-### 5. Visit Note Processor
-- **Purpose**: Processes and logs visit notes using AI
-- **Features**: JSON processing, automatic data creation, territory mapping, dynamic account/product context
-- **Components**: Enhanced prompt template, AccountAProductNames flow for context injection
-- **Location**: `agentforce-components/visit-note-processor/`
+4. If your org isn't already open, open it now:
+   ```bash
+   sf org open
+   ```
 
-### 6. Pre Call Planning
-- **Purpose**: Helps prepare for visits by gathering insights and summaries about accounts and customers
-- **Features**: Account insights, provider affiliations, visit scheduling, HCP/HCO analysis
-- **Components**: Influencers Map and Get Visits actions, plus standard Identify Record by Name action
-- **Location**: `agentforce-components/pre-call-planning/`
+## Features
 
-**Topic Configuration:**
-- **Name**: Pre Call Planning
-- **API Name**: `PreCallPlanning`
-- **Classification Description**: Helps prepare for visits by gathering insights and summaries about accounts and customers, specifically HCPs or HCOs, to ensure effective engagement. This includes identifying and analyzing key information about HCPs, identifying key referrers, scheduling and managing visits, and distributing relevant content. The core objective is to ensure that Field Representatives are fully prepared and have a clear, data-driven plan before initiating any contact.
+### 🤖 **AI-Powered Agents**
 
-**Scope:**
-Your job is to gather relevant information and insights about the accounts or customers before a visit. You should not attempt to schedule visits or manage post-visit activities.
+- **Daily Briefing Agent**: Generates comprehensive daily briefings with key insights and priorities
+- **Influencer Map Agent**: Creates relationship maps and influence networks
+- **Next Best Customer Agent**: Identifies and recommends high-priority customers
+- **Post-Call Visit Notes Agent**: Processes and formats visit notes automatically
 
-**Instructions (verbatim):**
+### 🧠 **GenAI Functions**
 
-**Instruction 1:**
-If user asks to gather insights or summarize the account HCPs or HCOs, then follow the below steps in strict sequence:
-Step 1- If provider name is present in utterance, use it as accName and directly execute from step 4.
-Step 2 - If context_variable currentObjectApiName is "Account" and context_variable currentRecordId is neither empty nor the hard coded string 'currentRecordId', use currentRecordId as accId. Do not hardcode accountId as 'currentRecordId'.
-Step 3 - If context_variable currentObjectApiName is not "Account" or context_variable currentRecordId is empty or equals the hard coded string 'currentRecordId', prompt the user for a Provider Name. Use this provider name as accName discarding any salutations (Mr., Dr., etc.).
-Step 4 - Call "IdentifyRecordByName" action with recordName as accName removing any salutations(Mr., Dr., etc.) and objectApiName as "Account" and get accountId.
-Step 5 - Call "GenerateProviderSummary" action using the retrieved accountId, TerritoryId context variable if present and user utterance.
+- **Generate Complete Daily Briefing**: Apex-based action for comprehensive briefings
+- **Get Next Best Customer**: Flow-based action for customer recommendations
+- **Influencer Map Flow**: Flow-based action for relationship mapping
+- **Visit Note Processor**: Flow-based action for note processing
 
-**Instruction 2:**
-2.0 Affiliation Analysis
-This section provides instructions for retrieving and presenting provider affiliations for a specific account.
-2.1 Triggering the Action
-The agent should trigger this action when a user requests to see "affiliations," "connections," or "networks" for a specific account.
-2.2 Action Execution
-Extract the [Account Name] from the user's utterance.
-Use the Identify Record by Name action to find the AccountID.
-If the action finds a single, unique account, proceed directly without asking for confirmation. Pass the AccountID to the Influencer_Map_Flow.
-If the action returns multiple accounts with the same name, prompt the user to select the correct one before proceeding.
-2.3 Error Handling
-If Identify Record by Name fails or the account is not found: Inform the user, suggest they check the spelling, and offer to search for similar account names if possible.
-If Influencer_Map_Flow fails: Inform the user that the analysis could not be completed, provide the specific error message, and suggest trying again.
-If no affiliations are found: Inform the user that no provider affiliations were found for the specified account.
-2.4 Response Formatting
-Present the affiliation analysis results using the following exact format:
-Provider Affiliation Analysis for [Account Name]
-Top 5 Provider Affiliations:
-[Affiliated Account Name]
-Account Name: [RelatedAccountName]
-Influence Type: [InfluenceType]
-Affiliation Strength Type: [AffiliationStrengthType]
-Care Specialty: [CareSpecialtyId]
-Affiliation Type: [AffiliationType]
-[Next Affiliated Account Name]
-(Same format as above)
-(Continue for up to 5 affiliations)
-Summary:
-Total Affiliations Found: [Number]
-Hard Affiliations: [Number]
-Soft Affiliations: [Number]
+### 📊 **Business Intelligence**
 
-**Instruction 3:**
-This section provides instructions for retrieving and presenting a schedule of upcoming visits using the Get_Visits_Simple flow.
-## 1.1 Triggering the Action
-The agent should trigger this action when a user's request includes keywords or phrases such as:
-- "schedule"
-- "visits"
-- "appointments"
-- "calendar"
-- "itinerary"
-- "my visits"
-- "territory visits"
-- "upcoming visits"
-## 1.2 Action Execution
-The agent must parse the user's request to identify the key parameter: [Time Frame].
-### Flow Execution Process:
-1. Territory-Based Retrieval: The agent will use the Get_Visits_Simple flow which automatically:
-- Retrieves the current user's assigned territory from UserTerritory2Association
-- Uses the territory ID to filter visits by TerritoryId (not VisitorId)
-- Ensures the user only sees visits within their assigned territory
-2. Time Frame Parameter: The agent must pass the [Time Frame] parameter to the flow. Supported values include:
-- "Today"
-- "Tomorrow"
-- "This Week"
-- "Next Week"
-- "This Month"
-- "Next Month"
-3. Flow Input: The agent will call the Get_Visits_Simple flow with:
-- Input: TimePeriod (String) - The specified time frame
-- Output: VisitResults (String) - Formatted visit schedule data
-## 1.3 Handling Missing Information & No Results
-### Missing Time Frame:
-If the [Time Frame] is not specified (e.g., "Show me my schedule"):
-- The agent must prompt the user for this information
-- Example: "Please specify a time frame, such as 'today', 'this week', 'next week', 'this month', or 'next month'."
-- The agent should present the available options to the user
-### No Territory Assignment:
-If the user has no territory assignment:
-- The flow will return an error message: "No territory assignment found for the current user. Please ensure the user is assigned to a territory."
-- The agent must inform the user that they need to be assigned to a territory to view visits
-### No Visits Found:
-If the Get_Visits_Simple flow returns no data:
-- The flow will return: "No visits found for the user's territory in the specified time period: [TimePeriod]"
-- The agent must inform the user that no visits are scheduled for their territory in the specified time frame
-## 1.4 Response Generation
-### Data Format:
-The Get_Visits_Simple flow returns formatted visit data in the following structure:
-<br>Visit #1 | Account: [Account Name] | Time: [Planned Visit Start Time]<br>Visit #2 | Account: [Account Name] | Time: [Planned Visit Start Time]<br>...<br>``````<br>Your visit schedule for [Time Frame]:<br>📅 [Date]<br>• [Time] - [Account Name]<br>• [Time] - [Account Name]<br>📅 [Date] <br>• [Time] - [Account Name]<br>Total: [X] visits scheduled<br>
+- **Territory Analysis**: Territory-based data analysis and insights
+- **Account Scoring**: Automated account prioritization and scoring
+- **Visit Optimization**: Smart visit scheduling and planning
+- **Conversation Starters**: AI-generated talking points and conversation prompts
 
-**Example User Inputs:**
-- "Show me my visits for this week"
-- "What visits do I have today?"
-- "Summarize Aaron Morita"
-- "Summarize Thomas"
-- "Show affiliations for Aaron"
-- "Who influences Thomas"
+### 🔧 **Custom Components**
 
-### 7. Post Call Visit Notes
-- **Purpose**: Analyzes dictated or written free text notes following customer visits and updates structured CRM records
-- **Features**: Voice note processing, structured data logging, medical inquiry creation, follow-up visit scheduling
-- **Components**: Visit_Note_Processor_Simple action integration
-- **Location**: `agentforce-components/post-call-visit-notes/`
+- **12 Apex Classes**: Complete business logic and data processing
+- **4 Salesforce Flows**: Automated workflows and business processes
+- **13 GenAI Prompt Templates**: AI-powered conversation and data processing
+- **4 Agentforce Topics**: Specialized knowledge areas and capabilities
 
-**Topic Configuration:**
-- **Name**: PostCallVisitNotes
-- **API Name**: `PostCallVisitNotes_16jWs000000Qc3F`
-- **Classification Description**: You are an AI assistant for a pharmaceutical representative. Your task is to analyze a dictated or written free text note following a customer visit and update a structured CRM record.
+## Architecture
 
-**Scope:**
-Your job is to assist the pharma representative by parsing the information they dictate about a provider visit and accurately logging it into the Note record. You also create medical inquiries as needed and schedule follow up Provider Visits.
+### **Three-Tier Agentforce Architecture**
 
-**Instructions (verbatim):**
-
-Take the voice note provided by the User and provide that as input to the Vist_Note_Processor_Simple Action and Output the response provided by the action
-
-**Example User Input:**
-
-Example User Input
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Salesforce org with **Life Sciences Cloud for Customer Engagement** enabled
-- Agentforce enabled and configured
-- Provider Visit Management objects and Life Sciences Marketable Product objects
-- Territory2 and UserTerritory2Association setup
-- Admin permissions for Agentforce and Life Sciences Cloud configuration
-
-### Installation
-```bash
-# 1. Clone the repository
-git clone https://github.com/salesforce-misc/lifesciencescloud-agent-templates.git
-cd lifesciencescloud-agent-templates
-
-# 2. Create Flex-based Prompt Templates FIRST
-# IMPORTANT: Create prompt templates from agentforce-components/ with exact Label and API Names
-# This is required before deployment as Flows have dependencies on these templates
-
-# 3. Deploy to your org
-./deployment/deploy.sh your-org-alias
-
-# 4. Configure Agentforce components (see documentation/)
-```
-
-### ⚠️ Critical Deployment Requirements
-
-**Before running the deployment script:**
-
-1. **Create Flex-based Prompt Templates**: 
-   - Navigate to `agentforce-components/` and create prompt templates with exact Label and API Names as specified in the files
-   - This step is mandatory as Flows have dependencies on these prompt templates
-   - Deployment will fail without these templates created first
-
-2. **User Access Configuration**:
-   - End users must be provided access to the Agent that contains the actions
-   - End users must be assigned the **Permission Set License → Prompt Template User**
-   - Without these permissions, users cannot access the Agentforce functionality
-
-3. **Manual Agentforce Action Creation**:
-   - Admins must manually create Agentforce Actions from the deployed Apex classes and Flows
-   - **daily-briefing**: Create `Generate_Complete_Daily_Briefing` action from Apex class `DailyBriefingOrchestrator`
-     - **Input**: Target Date (Require Input)
-     - **Output**: output (Show in conversation)
-   - **get-nbc**: Create `GetNBC` action from Flow `GetNBC`
-     - **Input**: NumberOfNBC (Require Input)
-     - **Output**: NextBestCustomerFormattedOutput (Show in conversation), ErrorMessage (Show in conversation)
-   - **get-visits**: Create `Get_Visits_Simple` action from Flow `Get_Visits_Simple`
-     - **Input**: TimePeriod (Require Input, Collect Data from User), targetAccountId (Require Input)
-     - **Output**: FormattedOutput (Show in conversation), ErrorMessage (Show in conversation)
-   - **influencer-map**: Create `Influencer_Map_Flow` action from Flow `Influencer_Map_Flow`
-     - **Input**: TargetAccountName (Require Input), targetAccountId (Require Input)
-     - **Output**: FormattedAffiliationOutput (Show in conversation), errorMessage (Show in conversation)
-   - **visit-note-processor**: Create `Visit_Note_Processor_Simple` action from Flow `Visit_Note_Processor_Simple`
-     - **Input**: VoiceNote (Require Input, Collect Data from User)
-     - **Output**: FullUpdateSummary (Show in conversation)
-   - **pre-call-planning**: This topic uses the actions from get-visits and influencer-map, plus requires the standard **Identify Record by Name** action
-   - **post-call-visit-notes**: This topic uses the `Visit_Note_Processor_Simple` action from the visit-note-processor component
-
-## 📁 Repository Structure
+The package follows the modern Agentforce architecture introduced in Winter '26:
 
 ```
-lsc4ce-agentforce-solutions/
-├── agentforce-components/     # Agentforce configurations
-├── force-app/                # Salesforce metadata
-├── deployment/               # Deployment scripts
-├── documentation/            # Setup guides and docs
-└── tests/                   # Test classes
+GenAiPlannerBundle (Complete Agent)
+├── References GenAiPlugins (Topics)
+│   ├── Daily_Briefing
+│   ├── Influencer_Map
+│   ├── NextBestCustomer
+│   └── PostCallVisitNotes
+└── Each GenAiPlugin references GenAiFunctions (Actions)
+    ├── Generate_Complete_Daily_Briefing
+    ├── GetNBC
+    ├── Influencer_Map_Flow
+    └── Visit_Note_Processor_Simple
 ```
 
-## 📚 Documentation
+### **Component Structure**
 
-- [Setup Guide](documentation/SETUP_GUIDE.md) - Complete installation instructions
-- [API Reference](documentation/API_REFERENCE.md) - Technical documentation
-- [Troubleshooting](documentation/TROUBLESHOOTING.md) - Common issues and solutions
-- [User Guide](documentation/USER_GUIDE.md) - End-user instructions
+- **GenAiPlannerBundles**: Complete agent definitions with reasoning and planning capabilities
+- **GenAiPlugins**: Topic definitions with specialized instructions and capabilities
+- **GenAiFunctions**: Individual action implementations (Apex, Flows, or Prompt Templates)
+- **GenAiPromptTemplates**: AI-powered conversation and data processing templates
 
-## 🔧 Development
+## Usage
 
-### Testing
-```bash
-sf apex run test --target-org your-org --class-names DailyBriefingAgentTest
+### **Accessing Agents**
+
+1. Navigate to **Agentforce Studio** in your Salesforce org
+2. Select the agent you want to interact with
+3. Start a conversation using natural language
+
+### **Example Interactions**
+
+#### Daily Briefing Agent
+```
+"Generate my daily briefing"
+"What are my priority accounts for today?"
+"Show me my visit schedule"
 ```
 
-### Deployment
-```bash
-sf project deploy start --target-org your-org
+#### Influencer Map Agent
+```
+"Create an influencer map for Acme Corp"
+"Show me the decision makers at this account"
+"Who are the key influencers in this territory?"
 ```
 
-## 📞 Support
+#### Next Best Customer Agent
+```
+"Who are my next best customers?"
+"Show me high-priority accounts in my territory"
+"Recommend customers for this week"
+```
 
-For issues or questions:
-1. Check the troubleshooting guide
-2. Review the setup documentation
-3. Contact the LSC4CE team
+#### Post-Call Visit Notes Agent
+```
+"Process my visit notes from today"
+"Format my meeting notes"
+"Create a summary of my customer interactions"
+```
 
+## Troubleshooting
+
+### **Deployment Issues**
+
+#### Salesforce CLI deployment fails with metadata errors
+This may happen if the metadata structure is incompatible. To fix it:
+
+1. Ensure you're using Salesforce CLI version 2.109.6 or higher
+2. Check that your org has the required licenses
+3. Verify that Agentforce is properly enabled
+
+#### Agent not responding in Agentforce Studio
+If agents are not responding:
+
+1. Check that all GenAiFunctions are properly deployed
+2. Verify that GenAiPlugins reference the correct functions
+3. Ensure that GenAiPlannerBundles are properly configured
+
+### **Common Issues**
+
+#### "Agent not found" error
+- Verify that the GenAiPlannerBundle is deployed and active
+- Check that the agent is properly configured in Agentforce Studio
+
+#### "Function not available" error
+- Ensure that GenAiFunctions are deployed and active
+- Verify that GenAiPlugins reference the correct function names
+
+#### "Topic not recognized" error
+- Check that GenAiPlugins are deployed and active
+- Verify that intent patterns are properly configured
+
+## Development
+
+### **Creating Custom Agents**
+
+1. **Create GenAiFunction**: Define individual actions using Apex, Flows, or Prompt Templates
+2. **Create GenAiPlugin**: Define topics with instructions and function references
+3. **Create GenAiPlannerBundle**: Define complete agents with plugin references
+4. **Deploy and Test**: Use the deployment scripts to deploy and validate
+
+### **Extending Existing Agents**
+
+1. **Add New Functions**: Create additional GenAiFunctions for new capabilities
+2. **Update Plugins**: Add function references to existing GenAiPlugins
+3. **Enhance Instructions**: Update plugin instructions for better AI understanding
+4. **Test and Deploy**: Validate changes and deploy updates
+
+### **Best Practices**
+
+- **Modular Design**: Keep functions focused on specific tasks
+- **Clear Instructions**: Provide detailed instructions for AI understanding
+- **Error Handling**: Implement robust error handling in all functions
+- **Testing**: Thoroughly test all agents before deployment
+
+## Contributing
+
+We welcome contributions to the lifesciencescloud-agent-templates! Please follow these guidelines:
+
+1. **Fork the repository** and create a feature branch
+2. **Follow coding standards** and include proper documentation
+3. **Test thoroughly** before submitting pull requests
+4. **Update documentation** for any new features or changes
+
+### **Development Setup**
+
+1. Clone the repository
+2. Install Salesforce CLI
+3. Set up a development org
+4. Deploy the package for testing
+
+### **Submitting Changes**
+
+1. Create a pull request with a clear description
+2. Include tests for new functionality
+3. Update documentation as needed
+4. Ensure all checks pass
+
+## About
+
+Sample application that showcases **Agentforce Agents**, **GenAI Functions**, and **Custom Business Logic**.
+
+### Topics
+
+- agentforce
+- ai
+- salesforce
+- agents
+- genai
+- automation
+
+### Resources
+
+- [Salesforce Agentforce Documentation](https://help.salesforce.com/s/articleView?id=sf.agentforce_overview.htm)
+- [GenAI Functions Guide](https://help.salesforce.com/s/articleView?id=sf.genai_functions.htm)
+- [Agentforce Studio](https://help.salesforce.com/s/articleView?id=sf.agentforce_studio.htm)
+
+### License
+
+MIT License
+
+### Code of Conduct
+
+[Code of Conduct](CODE_OF_CONDUCT.md)
+
+### Security Policy
+
+[Security Policy](SECURITY.md)

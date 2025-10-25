@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <canEscalate>false</canEscalate>
+    <description>AI agent that generates comprehensive daily briefings for sales teams with key insights and priorities</description>
+    <developerName>Daily_Briefing_Agent</developerName>
+    <genAiPlannerBundleInstructions>
+        <description>This agent specializes in generating daily briefings by analyzing sales data, account activities, and business metrics. It provides actionable insights, priorities, and recommendations to help sales teams start their day with clear focus and direction.</description>
+        <developerName>instruction_0_daily_briefing_agent</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0_daily_briefing_agent</masterLabel>
+    </genAiPlannerBundleInstructions>
+    <genAiPlannerBundlePlugins>
+        <genAiPluginName>Daily_Briefing</genAiPluginName>
+    </genAiPlannerBundlePlugins>
+    <language>en_US</language>
+    <masterLabel>Daily Briefing Agent</masterLabel>
+    <pluginType>Agent</pluginType>
+    <scope>Generates comprehensive daily briefings for sales teams</scope>
+</GenAiPlannerBundle>

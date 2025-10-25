@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <canEscalate>false</canEscalate>
+    <description>Processes and formats visit notes for sales representatives</description>
+    <developerName>Visit_Note_Processor_Simple</developerName>
+    <functionType>Flow</functionType>
+    <genAiFunctionInstructions>
+        <description>This function processes raw visit notes, extracts key information, and formats them into structured, actionable insights for sales teams.</description>
+        <developerName>instruction_0_visit_notes</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0_visit_notes</masterLabel>
+    </genAiFunctionInstructions>
+    <language>en_US</language>
+    <masterLabel>Visit Note Processor Simple</masterLabel>
+    <pluginType>Action</pluginType>
+    <scope>Processes and formats visit notes for sales teams</scope>
+</GenAiFunction>

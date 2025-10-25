@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <canEscalate>false</canEscalate>
+    <description>Helps prepare for visits by uncovering provider affiliations and influence maps for HCPs. For a given HCP, this topic would enable field reps to quickly find all the affiliations in their network along with the strength and direction of such affiliations.</description>
+    <developerName>Influencer_Map</developerName>
+    <genAiFunctions>
+        <functionName>EmployeeCopilot__IdentifyRecordByName</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>Influencer_Map_Flow</functionName>
+    </genAiFunctions>
+    <genAiPluginInstructions>
+        <description>1.0 Affiliation Analysis
+This section provides instructions for retrieving and presenting provider affiliations for a specific account.
+
+1.1 Triggering the Action
+The agent should trigger this action when a user requests to see &quot;affiliations,&quot; &quot;connections,&quot; or &quot;networks&quot; for a specific account.
+
+1.2 Action Execution
+Extract the [Account Name] from the user&apos;s utterance.
+
+Use the Identify Record by Name action to find the AccountID.
+
+1.2.1. If the provider name/account name is present in the user&apos;s input, use the provider name as accName and proceed directly to step 4.
+1.2.2. Check the value of the currentObjectApiName context variable. If the value is Account and currentRecordId is neither empty nor the hard-coded string &apos;currentRecordId&apos;, use currentRecordId as accId. Don&apos;t hardcode accountId as &apos;currentRecordId&apos;.
+1.2.3. Check the value of the currentObjectApiName context variable. If the value is not Account and currentRecordId is empty or equals the hard-coded string &apos;currentRecordId&apos;, prompt the user for a provider name. Use the provided name as accName.
+1.2.4. Call the IdentifyRecordByName action using accName as the recordName discarding any salutations (Mr., Dr., etc.) and Account as the  objectApiName to get the accountId.
+1.2.5. If IdentifyRecordByName returns multiple results, ONLY CONSIDER the sObjectInfo with &quot;apiName&quot;: &quot;Account&quot; and &quot;label&quot;: &quot;Account&quot;. Ask the User to Select the correct record if there are multiple results with &quot;apiName&quot;: &quot;Account&quot; and &quot;label&quot;: &quot;Account&quot;
+NEVER SHOW RECORDS WHERE &quot;apiName&quot;: &quot;Contact&quot; AND &quot;label&quot;: &quot;Contact&quot;
+1.2.6 Call the &quot;Influencer_Map_Flow&quot; action using the retrieved accountId and the account name from the user&apos;s input
+
+1.3 Error Handling
+
+If Identify Record by Name fails or the account is not found: Inform the user, suggest they check the spelling, and offer to search for similar account names if possible.
+If Influencer_Map_Flow fails: Inform the user that the analysis could not be completed, provide the specific error message, and suggest trying again.
+If no affiliations are found: Inform the user that no provider affiliations were found for the specified account.
+
+1.4 Response Formatting
+
+Present the affiliation analysis results using the following exact format:
+
+Provider Affiliation Analysis for [Account Name]
+
+Top 5 Provider Affiliations:
+
+[Affiliated Account Name]
+
+Account Name: [RelatedAccountName]
+
+Influence Type: [InfluenceType]
+
+Affiliation Strength Type: [AffiliationStrengthType]
+
+Care Specialty: [CareSpecialtyId]
+
+Affiliation Type: [AffiliationType]
+
+[Next Affiliated Account Name]
+
+(Same format as above)
+
+(Continue for up to 5 affiliations)
+
+Summary:
+
+Total Affiliations Found: [Number]
+
+Hard Affiliations: [Number]
+
+Soft Affiliations: [Number]</description>
+        <developerName>instruction_0_1761376519933</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0_1761376519933</masterLabel>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <masterLabel>Influencer Map</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>Your job is to gather relevant information and insights about the accounts or customers before a visit. You should not attempt to schedule visits or manage post-visit activities.</scope>
+</GenAiPlugin>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <canEscalate>false</canEscalate>
+    <description>Retrieves the next best customer recommendations based on territory and scoring criteria</description>
+    <developerName>GetNBC</developerName>
+    <functionType>Flow</functionType>
+    <genAiFunctionInstructions>
+        <description>This function retrieves the next best customer recommendations by analyzing territory data, account scores, and business criteria to provide prioritized customer suggestions for sales teams.</description>
+        <developerName>instruction_0_getnbc</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0_getnbc</masterLabel>
+    </genAiFunctionInstructions>
+    <language>en_US</language>
+    <masterLabel>Get Next Best Customer</masterLabel>
+    <pluginType>Action</pluginType>
+    <scope>Retrieves next best customer recommendations for sales teams</scope>
+</GenAiFunction>

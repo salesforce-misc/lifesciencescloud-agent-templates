@@ -937,7 +937,7 @@ public with sharing class DailyBriefingAgent {
                         } else if (sectionName.contains('Affiliations') || sectionName.contains('Key Contacts')) {
                             // Extract contact names from affiliation data
                             for (String text : sectionTexts) {
-                                if (text.contains('Dr.') || text.contains('Tier') || text.contains('Partners')) {
+                                if (text.contains('Dr.') || text.contains('Tier')) {
                                     // Extract doctor names from text like "Dr. William Smith (Tier 1)"
                                     String[] parts = text.split('\\(');
                                     if (parts.size() > 0) {
