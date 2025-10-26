@@ -1,4 +1,4 @@
-# LSC4CE Agentforce Solutions - Troubleshooting Guide
+# Life Sciences Cloud Agentforce Templates - Troubleshooting Guide
 
 ## Common Issues and Solutions
 
@@ -33,6 +33,20 @@
 - Verify prompt template is activated
 - Check template variables are properly mapped
 - Review template content for syntax errors
+
+#### Issue: "GetNBC action input parameter error"
+**Symptoms**: GetNBC action fails with input parameter errors
+**Solutions**:
+- Ensure the input parameter is named `RAC` (not `NumberOfNBC`)
+- Verify the input is of type Number
+- Check that the RAC value is provided when calling the action
+
+#### Issue: "Prompt Template User license missing"
+**Symptoms**: Users cannot access Agentforce functionality
+**Solutions**:
+- Assign "Prompt Template User" permission set license to end users
+- Verify users have access to the Agent containing the actions
+- Check that the "Life Sciences Cloud Agentforce User" permission set is assigned
 
 ### 3. Data Access Issues
 
@@ -161,7 +175,7 @@ sf project deploy cancel --target-org your-org --job-id JOB_ID
 ### 1. Internal Resources
 - Check existing documentation
 - Review setup guides and API reference
-- Consult with LSC4CE team members
+- Consult with Life Sciences Cloud team members
 
 ### 2. Salesforce Resources
 - Salesforce Help & Training
@@ -169,7 +183,7 @@ sf project deploy cancel --target-org your-org --job-id JOB_ID
 - Salesforce Developer Community
 
 ### 3. Escalation
-- Contact LSC4CE team lead
+- Contact Life Sciences Cloud team lead
 - Escalate to Salesforce support if needed
 - Document issues for future reference
 

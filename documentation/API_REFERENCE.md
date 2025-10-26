@@ -1,4 +1,4 @@
-# LSC4CE Agentforce Solutions - API Reference
+# Life Sciences Cloud Agentforce Templates - API Reference
 
 ## Apex Classes
 
@@ -23,11 +23,23 @@ Orchestrates the complete daily briefing generation process.
 #### Methods
 - `generateCompleteDailyBriefing(List<DailyBriefingRequest> requests)`
 
+#### Input Parameters
+- `targetDate`: Date (Target date for the briefing)
+
+#### Output Parameters
+- `output`: String (Complete daily briefing output)
+
 ### VisitNoteProcessor
 Processes visit notes and creates related records.
 
 #### Methods
 - `processVisitNotes(List<VisitNoteRequest> requests)`
+
+#### Input Parameters
+- `voiceNote`: String (Voice note or text input from user)
+
+#### Output Parameters
+- `fullUpdateSummary`: String (Summary of all updates made)
 
 ### VisitDateRangeAction
 Calculates date ranges for different time periods.
@@ -37,48 +49,49 @@ Calculates date ranges for different time periods.
 
 ## Flows
 
-### Get_Visits_Enhanced
-Retrieves and formats visit schedules with territory filtering.
-
-#### Input Variables
-- `timePeriod`: String (Today, Tomorrow, This Week, etc.)
-- `userId`: String (optional, defaults to current user)
-
-#### Output Variables
-- `formattedVisits`: String (formatted visit schedule)
-
 ### Influencer_Map_Flow
 Analyzes provider affiliations and relationships.
 
 #### Input Variables
 - `targetAccountId`: String (Account ID to analyze)
+- `targetAccountName`: String (Account Name to analyze)
 
 #### Output Variables
-- `finalResponse`: String (analysis results)
-- `success`: Boolean (operation status)
+- `formattedAffiliationOutput`: String (formatted affiliation analysis results)
+- `errorMessage`: String (error message if operation fails)
 
 ### GetNBC
 Identifies next best customers for sales focus.
 
 #### Input Variables
-- `userId`: String (optional, defaults to current user)
+- `RAC`: Number (number of next best customers to return)
 
 #### Output Variables
 - `nextBestCustomerFormattedOutput`: String (formatted NBC results)
+- `errorMessage`: String (error message if operation fails)
+
+### Visit_Note_Processor_Simple
+Processes and logs visit notes using AI with JSON processing and automatic data creation.
+
+#### Input Variables
+- `voiceNote`: String (voice note or text input from user)
+
+#### Output Variables
+- `fullUpdateSummary`: String (summary of all updates made)
 
 ## Agentforce Actions
 
 ### Daily Briefing Actions
-- `Get_Daily_Visits_Action`
-- `Get_Account_Summaries_Action`
-- `Calculate_Priority_Metrics_Action`
-- `Generate_Conversation_Starters_Action`
+- `Generate_Complete_Daily_Briefing` (Apex-based action from DailyBriefingOrchestrator class)
+
+### Next Best Customer Actions
+- `GetNBC` (Flow-based action)
 
 ### Influencer Map Actions
-- `Influencer_Map_Analysis`
+- `Influencer_Map_Flow` (Flow-based action)
 
 ### Visit Note Processor Actions
-- `Process_Visit_Notes`
+- `Visit_Note_Processor_Simple` (Flow-based action)
 
 ## Data Models
 
@@ -131,21 +144,34 @@ Represents a conversation starter for account visits.
 
 ### Generate Daily Briefing
 ```apex
-BriefingResponse response = DailyBriefingAgent.generateDailyBriefing(
-    UserInfo.getUserId(), 
-    Date.today(), 
-    'all'
-);
+// Using DailyBriefingOrchestrator (recommended for Agentforce actions)
+List<DailyBriefingOrchestrator.DailyBriefingRequest> requests = new List<DailyBriefingOrchestrator.DailyBriefingRequest>();
+DailyBriefingOrchestrator.DailyBriefingRequest request = new DailyBriefingOrchestrator.DailyBriefingRequest();
+request.targetDate = Date.today();
+requests.add(request);
+
+List<DailyBriefingOrchestrator.DailyBriefingResponse> responses = DailyBriefingOrchestrator.generateCompleteDailyBriefing(requests);
 ```
 
 ### Process Visit Notes
 ```apex
-List<VisitNoteProcessor.VisitNoteRequest> requests = new List<VisitNoteProcessor.VisitNoteRequest>();
-VisitNoteProcessor.VisitNoteRequest request = new VisitNoteProcessor.VisitNoteRequest();
-request.visitNotesJson = '{"accountName": "Test Account", ...}';
-requests.add(request);
+// Using Visit_Note_Processor_Simple Flow (recommended for Agentforce actions)
+// Input: voiceNote (String) - Voice note or text input from user
+// Output: fullUpdateSummary (String) - Summary of all updates made
+```
 
-List<VisitNoteProcessor.ProcessingResult> results = VisitNoteProcessor.processVisitNotes(requests);
+### Get Next Best Customer
+```apex
+// Using GetNBC Flow (recommended for Agentforce actions)
+// Input: RAC (Number) - Number of next best customers to return
+// Output: nextBestCustomerFormattedOutput (String) - Formatted NBC results
+```
+
+### Influencer Map Analysis
+```apex
+// Using Influencer_Map_Flow (recommended for Agentforce actions)
+// Input: targetAccountId (String), targetAccountName (String)
+// Output: formattedAffiliationOutput (String) - Formatted affiliation analysis results
 ```
 
 ## Performance Considerations
@@ -174,4 +200,5 @@ List<VisitNoteProcessor.ProcessingResult> results = VisitNoteProcessor.processVi
 - View All Data (for Flow execution)
 - Edit Topics
 - Configure Entities
+- Prompt Template User (for accessing prompt templates)
 

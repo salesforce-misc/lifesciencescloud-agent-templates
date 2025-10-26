@@ -275,6 +275,9 @@
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
+        <limit>
+            <elementReference>RAC</elementReference>
+        </limit>
         <object>TerritoryAccountScore</object>
         <sortField>Rank</sortField>
         <sortOrder>Asc</sortOrder>
@@ -360,6 +363,14 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RAC</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
     </variables>
     <variables>
         <description>Territory ID for the user</description>

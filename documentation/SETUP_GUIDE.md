@@ -1,8 +1,8 @@
-# LSC4CE Agentforce Solutions - Setup Guide
+# Life Sciences Cloud Agentforce Templates - Setup Guide
 
 ## Overview
 
-This guide provides step-by-step instructions for deploying and configuring the LSC4CE Agentforce Solutions package.
+This guide provides step-by-step instructions for deploying and configuring the Life Sciences Cloud Agentforce Templates package.
 
 ## ⚠️ Critical Deployment Requirements
 
@@ -19,10 +19,11 @@ This guide provides step-by-step instructions for deploying and configuring the 
 ## Prerequisites
 
 ### Salesforce Org Requirements
-- Salesforce org with Agentforce enabled
+- Salesforce org with **Life Sciences Cloud for Customer Engagement** enabled
+- Agentforce for Life Sciences Cloud enabled and configured
 - Provider Visit Management objects enabled
 - Territory2 and UserTerritory2Association configured
-- Admin permissions for Agentforce configuration
+- Admin permissions for Agentforce and Life Sciences Cloud configuration
 
 ### Required Objects
 - Visit
@@ -46,14 +47,14 @@ This guide provides step-by-step instructions for deploying and configuring the 
    **From `agentforce-components/get-nbc/prompts/`:**
    - NBC_Formatted_Output
 
-   **From `agentforce-components/get-visits/prompts/`:**
-   - Format_Get_Visit_Output
-
    **From `agentforce-components/influencer-map/prompts/`:**
    - Formatted_Influence_Graph
 
    **From `agentforce-components/daily-briefing/prompts/`:**
    - Conversation_Starters_Prompt
+
+   **From `agentforce-components/visit-note-processor/prompts/`:**
+   - Visit_Note_Mapper
 
 3. Copy the content from each `.genAiPromptTemplate-meta.xml` file and create the prompt template with the exact Label and API Name specified
 4. Ensure all prompt templates are saved and active
@@ -97,15 +98,9 @@ sf project deploy start --target-org your-org-alias
    - Action Name: `GetNBC`
    - Flow: `GetNBC`
    - Description: "Identifies next best customers for sales focus"
-   - **Input**: NumberOfNBC (Require Input)
+   - **Input**: RAC (Require Input)
    - **Output**: NextBestCustomerFormattedOutput (Show in conversation), ErrorMessage (Show in conversation)
 
-   **Get_Visits_Simple Action:**
-   - Action Name: `Get_Visits_Simple`
-   - Flow: `Get_Visits_Simple`
-   - Description: "Retrieves and formats visit schedules"
-   - **Input**: TimePeriod (Require Input, Collect Data from User), targetAccountId (Require Input)
-   - **Output**: FormattedOutput (Show in conversation), ErrorMessage (Show in conversation)
 
    **Influencer_Map_Flow Action:**
    - Action Name: `Influencer_Map_Flow`
@@ -121,41 +116,41 @@ sf project deploy start --target-org your-org-alias
    - **Input**: VoiceNote (Require Input, Collect Data from User)
    - **Output**: FullUpdateSummary (Show in conversation)
 
-## Step 4: Configure Agentforce Components
+## Step 4: Create Agent Topics
 
-### 4.1 Daily Briefing Agent
-1. Navigate to Setup → Agentforce → Agents
-2. Create or configure the Daily Briefing agent
-3. Add the `Generate_Complete_Daily_Briefing` action to the agent
-4. Configure topics using files in `agentforce-components/daily-briefing/topics/`
-5. Set up prompts using files in `agentforce-components/daily-briefing/prompts/`
+Create the Agent Topics through **Agentforce Studio → Agentforce Assets → Topics**:
+- [Daily Briefing](agentforce-components/daily-briefing/topic-configuration/Daily_Briefing_Topic.md)
+- [Influencer Map](agentforce-components/influencer-map/topic-configuration/Influencer_Map_Topic.md)
+- [NextBestCustomer](agentforce-components/get-nbc/topic-configuration/NextBestCustomer_Topic.md)
+- [PostCallVisitNote](agentforce-components/visit-note-processor/topic-configuration/PostCallVisitNotes_Topic.md)
 
-### 4.2 Influencer Map
-1. Follow the setup guide in `agentforce-components/influencer-map/setup/AGENTFORCE_SETUP.md`
-2. Add the `Influencer_Map_Flow` action to the appropriate agent
-3. Configure the Visit Planning topic integration
+Use the Topic details provided in the documentation links above.
 
-### 4.3 Visit Note Processor
-1. Copy the prompt template from `agentforce-components/visit-note-processor/prompts/agentforce_prompt_template_corrected.txt`
-2. Create a new prompt template in Agentforce
-3. Configure the Process Visit Notes action
+## Step 5: Create Life Sciences Field Sales Agent
 
-## Step 5: Activate Flows
+Create the Life Sciences Field Sales Agent through **Agentforce Studio → Agentforce Agents → New Agent** using the Life Sciences Field Sales Template.
+
+## Step 6: Configure Agent
+
+Add the Topics and Actions to the New Agent.
+
+## Step 7: Test Agent
+
+Test the Agent in Agentforce Studio to ensure all components are working correctly.
+
+## Step 8: Activate Flows
 
 1. Navigate to Setup → Process Automation → Flows
 2. Activate the following flows:
-   - Get_Visits_Enhanced
-   - Get_Visits_Simple
    - Influencer_Map_Flow
    - GetNBC
-   - Visit_Note_based_Logging
-   - Provider_Summarization
+   - Visit_Note_Processor_Simple
 
-## Step 6: Configure User Access and Permissions
+## Step 9: Configure User Access and Permissions
 
-### 6.1 Create Permission Set
+### 9.1 Create Permission Set
 1. Navigate to Setup → Permission Sets
-2. Create new permission set: "LSC4CE Agentforce User"
+2. Create new permission set: "Life Sciences Cloud Agentforce User"
 3. Assign the following permissions:
    - Customize Application
    - Manage Agentforce
@@ -163,7 +158,7 @@ sf project deploy start --target-org your-org-alias
    - Edit Topics
    - Configure Entities
 
-### 6.2 Assign Agent Access
+### 9.2 Assign Agent Access
 1. Navigate to Setup → Agentforce → Agents
 2. For each agent containing the actions:
    - Click on the agent name
@@ -171,33 +166,37 @@ sf project deploy start --target-org your-org-alias
    - Add end users who will use the Agentforce actions
    - Ensure users have appropriate territory assignments
 
-### 6.3 Assign Permission Set License
+### 9.3 Assign Permission Set License
 1. Navigate to Setup → Permission Set Licenses
 2. Assign the **"Prompt Template User"** permission set license to end users
 3. This license is required for users to access and use the prompt templates
 
-### 6.4 Assign Permission Set to Users
+### 9.4 Assign Permission Set to Users
 1. Navigate to Setup → Users
 2. For each end user:
    - Click on the user name
    - Go to "Permission Set Assignments"
-   - Assign the "LSC4CE Agentforce User" permission set
+   - Assign the "Life Sciences Cloud Agentforce User" permission set
    - Ensure the "Prompt Template User" license is also assigned
 
-## Step 7: Test the Installation
+## Step 10: Assign Permissions
 
-### 7.1 Run Tests
+Assign Agent permission to users who need access to the agent functionality.
+
+## Step 11: Test the Installation
+
+### 11.1 Run Tests
 ```bash
 sf apex run test --target-org your-org --class-names DailyBriefingAgentTest
 ```
 
-### 7.2 Test Agentforce Actions
+### 11.2 Test Agentforce Actions
 1. Navigate to Agentforce Chat
 2. Test the following utterances:
    - "Generate my daily briefing"
    - "Show me affiliations for [Account Name]"
-   - "What visits do I have today?"
    - "Who should I meet with next?"
+   - "Process my visit notes"
 
 ## Troubleshooting
 
@@ -225,5 +224,5 @@ After successful installation:
 For additional help:
 - Check the troubleshooting guide
 - Review the API reference
-- Contact the LSC4CE team
+- Contact the Life Sciences Cloud team
 

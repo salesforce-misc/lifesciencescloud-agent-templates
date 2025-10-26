@@ -1,14 +1,14 @@
-# LSC4CE Agentforce Solutions - User Guide
+# Life Sciences Cloud Agentforce Templates - User Guide
 
 ## Overview
 
-The LSC4CE Agentforce Solutions provide conversational AI capabilities for field sales representatives, helping them access daily briefings, visit information, and customer insights through natural language interactions.
+The Life Sciences Cloud Agentforce Templates provide conversational AI capabilities for field sales representatives, helping them access daily briefings, customer insights, and visit note processing through natural language interactions.
 
 ## Getting Started
 
 ### Accessing Agentforce
 1. Navigate to the Agentforce chat interface in your Salesforce org
-2. Look for the LSC4CE Agentforce welcome component on your home page
+2. Look for the Life Sciences Cloud Agentforce welcome component on your home page
 3. Start typing your questions or use the suggested utterances
 
 ### Available Features
@@ -55,23 +55,6 @@ Ask questions like:
 - **Introduction Paths**: Recommended ways to make warm introductions
 - **Strategic Insights**: Relationship building recommendations
 
-## Get Visits
-
-### What is Get Visits?
-Get Visits retrieves and formats your visit schedule with detailed information about accounts and locations.
-
-### How to Use
-Ask questions like:
-- "What visits do I have today?"
-- "Show me my visit schedule"
-- "What's on my calendar for [date]?"
-
-### What You'll Get
-- **Visit Details**: Account names, locations, and times
-- **Account Information**: Account types and key details
-- **Location Details**: Addresses and contact information
-- **Visit Instructions**: Any special instructions for visits
-
 ## Next Best Customer (NBC)
 
 ### What is NBC?
@@ -89,24 +72,22 @@ Ask questions like:
 - **Territory Insights**: Analysis of your territory performance
 - **Action Recommendations**: Suggested next steps
 
-## Visit Note Processor
+## Post Call Visit Notes
 
-### What is Visit Note Processor?
-Visit Note Processor helps you log visit notes and automatically creates related records in Salesforce.
+### What is Post Call Visit Notes?
+Post Call Visit Notes helps you process dictated or written free text notes following customer visits and automatically updates structured CRM records.
 
 ### How to Use
-1. Provide visit notes in natural language
-2. The system will automatically:
-   - Extract key information
-   - Create Visit records
-   - Map to appropriate accounts
-   - Generate follow-up tasks
+Simply provide your visit notes in natural language:
+- "Process my visit notes"
+- "Log my visit with [Account Name]"
+- "Update my visit notes from today"
 
 ### What You'll Get
 - **Structured Data**: Automatically formatted visit information
 - **Record Creation**: Visit and related records created automatically
-- **Territory Mapping**: Proper territory assignment
-- **Follow-up Tasks**: Suggested next actions
+- **Medical Inquiries**: Medical inquiries created as needed
+- **Follow-up Scheduling**: Follow-up Provider Visits scheduled automatically
 
 ## Best Practices
 
@@ -164,7 +145,7 @@ Visit Note Processor helps you log visit notes and automatically creates related
 ### Getting Help
 1. Check the troubleshooting guide
 2. Contact your system administrator
-3. Reach out to the LSC4CE team
+3. Reach out to the Life Sciences Cloud team
 
 ## Advanced Features
 
@@ -189,7 +170,7 @@ You can ask more specific questions:
 ### Providing Feedback
 - Use the feedback options in the interface
 - Report issues through the support channel
-- Suggest improvements to the LSC4CE team
+- Suggest improvements to the Life Sciences Cloud team
 
 ### Training and Support
 - Attend training sessions for new features
@@ -198,7 +179,7 @@ You can ask more specific questions:
 
 ## Conclusion
 
-The LSC4CE Agentforce Solutions are designed to make your daily work more efficient and effective. By leveraging conversational AI, you can quickly access the information you need to succeed in your field sales role.
+The Life Sciences Cloud Agentforce Templates are designed to make your daily work more efficient and effective. By leveraging conversational AI, you can quickly access the information you need to succeed in your field sales role.
 
 Remember to:
 - Use natural language when asking questions
